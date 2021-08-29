@@ -1,0 +1,138 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+:root{
+    --boxColor: #0ff7;
+    --rotateDuration: 40s;
+    --ballSpeed: 2s;
+}
+body{
+    background-color: #000;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 75px;
+    perspective: 10em;
+    perspective-origin: 50% calc(50% - 2.5em);
+}
+.scene{
+    position: relative;
+    transform-style: preserve-3d;
+    animation: rotateScene var(--rotateDuration) linear infinite both;
+}
+@keyframes rotateScene {
+    from{transform: rotateY(0deg);}
+    to{transform: rotateY(360deg);}
+}
+.floor{
+    width: 20em;
+    height: 20em;
+    background: 
+    radial-gradient(circle,#0000, #000 50%),
+    repeating-conic-gradient(from 45deg, #111 0deg 90deg, #222 90deg 180deg );
+    background-size: 100%, 1em 1em;
+    position: absolute;
+    top: 1em;
+    transform: 
+    translate(-50%,-50%)
+    rotateX(90deg);
+}
+.cube{
+    width: 2em;
+    height: 2em;
+    transform-style: preserve-3d;
+    position: absolute;
+    top: -1em;
+    left: -1em;
+
+}
+.left, .right, .front, .back, .top, .bottom{
+    width: 100%;
+    height: 100%;
+    background: var(--boxColor);
+    position: absolute;
+    box-shadow: 0 0 .7em #000 inset;
+}
+.top{
+    transform: rotateX(90deg);
+    top: -1em;
+}
+.bottom{
+    transform: rotateX(90deg);
+    bottom: -1em;
+}
+.left{
+    transform: rotateY(90deg);
+    left: -1em;
+}
+.right{
+    transform: rotateY(90deg);
+    right: -1em;
+}
+.front{
+    transform: translateZ(1em);
+}
+.back{
+    transform: translateZ(-1em);
+}
+
+
+.ball{
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    background: radial-gradient(circle at top,#6cf9f9, #000);
+    box-shadow: 0 2px 2px #6cf9f9 inset;
+    position: absolute;
+    top: -2em;
+    left: -.5em;
+    animation: ballBounce var(--ballSpeed) infinite ease-out,
+    rotateScene var(--rotateDuration) linear infinite reverse;
+}
+@keyframes ballBounce {
+    0%, 100%{
+        top:-2em;
+        opacity: 0.75;
+    }
+    50%{
+        top:-4em;
+        opacity: 1;
+        animation-timing-function: ease-in;
+    }
+}
+.ballShadow{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background: radial-gradient( #000, #0000 50%);
+    animation: ballShadow var(--ballSpeed) infinite ease-out;
+}
+@keyframes ballShadow {
+    0%, 100%{
+        transform: scale(1);
+        opacity: 1;
+    }
+    50%{
+        transform: scale(2);
+        opacity: 0.6;
+        animation-timing-function: ease-in;
+    }
+}
+footer{
+    position: absolute;
+    display: block;
+    bottom: 0;
+    right: 0;
+}
+footer p{
+    text-align: center;
+    font-size: 1rem;
+    font-family: monospace;
+    letter-spacing: 5px;
+    background: -webkit-linear-gradient(#eee, #333);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 0 10px 20px 0;
+}
